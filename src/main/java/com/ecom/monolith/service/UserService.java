@@ -1,14 +1,17 @@
 package com.ecom.monolith.service;
 
+import com.ecom.monolith.Dto.UsersDto;
 import com.ecom.monolith.model.Users;
 
 import java.util.List;
 
 public interface UserService {
 
-    List<Users> getUsers();
+    List<UsersDto> getUsers();
 
-    List<Users> addUser(Users user);
+    UsersDto addUser(UsersDto user);
 
-    Users findById(Long id);
+    UsersDto findById(Long id);
+
+    UsersDto updateUser(Long id, UsersDto users);
 }
