@@ -1,6 +1,8 @@
 package com.ecom.monolith.service;
 
 import com.ecom.monolith.Dto.CartRequest;
+import com.ecom.monolith.Dto.CartResponse;
+import com.ecom.monolith.Mapper.CartMapper;
 import com.ecom.monolith.exception.ResourceNotFound;
 import com.ecom.monolith.model.CartItem;
 import com.ecom.monolith.model.Product;
@@ -11,6 +13,7 @@ import com.ecom.monolith.repositories.UsersRepository;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -22,10 +25,13 @@ public class CartItemServiceImpl implements CartItemService {
 
     private final CartItemRepository cartItemRepository;
 
-    public CartItemServiceImpl(UsersRepository usersRepository, ProductRepository productRepository, CartItemRepository cartItemRepository) {
+    private final CartMapper cartMapper;
+
+    public CartItemServiceImpl(UsersRepository usersRepository, ProductRepository productRepository, CartItemRepository cartItemRepository, CartMapper cartMapper) {
         this.usersRepository = usersRepository;
         this.productRepository = productRepository;
         this.cartItemRepository = cartItemRepository;
+        this.cartMapper = cartMapper;
     }
 
     @Override
@@ -59,5 +65,31 @@ public class CartItemServiceImpl implements CartItemService {
         cartItemRepository.save(newCartItem);
 
         return true;
+    }
+
+    @Override
+    public boolean removeItem(String userId, Long productId) {
+        Product product =
+                productRepository.findById(productId).orElseThrow(
+                        ()-> new ResourceNotFound("Product not found with id: "+productId)
+                );
+        Users users = usersRepository.findById(Long.valueOf(userId)).
+                orElseThrow(()->new ResourceNotFound("User does not exist with id: "+userId));
+        Optional<CartItem> cartItem = cartItemRepository.findByUsersAndProduct(users,product);
+        if(cartItem.isPresent()){
+            cartItemRepository.delete(cartItem.get());
+            return true;
+        }
+
+        return false;
+    }
+
+    @Override
+    public List<CartResponse> getCartItems(String userId) {
+        usersRepository.findById(Long.valueOf(userId)).orElseThrow(
+                ()->new ResourceNotFound("User does not exist with id: "+userId)
+        );
+        return cartItemRepository.findByUsersId(Long.valueOf(userId))
+                .stream().map(cartMapper::toDto).toList();
     }
 }
