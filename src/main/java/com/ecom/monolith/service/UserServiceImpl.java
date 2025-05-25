@@ -5,8 +5,6 @@ import com.ecom.monolith.Mapper.UserMapper;
 import com.ecom.monolith.exception.ResourceNotFound;
 import com.ecom.monolith.model.Users;
 import com.ecom.monolith.repositories.UsersRepository;
-import org.h2.engine.User;
-import org.mapstruct.Mapper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
