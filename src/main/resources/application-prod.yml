@@ -1,8 +1,8 @@
 spring:
   datasource:
-    url: jdbc:postgresql://<RDS-ENDPOINT>:5432/ecomdb
-    username: <YOUR_DB_USERNAME>
-    password: <YOUR_DB_PASSWORD>
+    url: ${DB_URL}
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
     driver-class-name: org.postgresql.Driver
 
   jpa:
@@ -20,11 +20,16 @@ info:
     description: Ecommerce Monolith Application
     version: 1.0.0
 
+logging:
+  level:
+    root: INFO
+    com.ecom.monolith: INFO
+
 management:
   endpoints:
     web:
       exposure:
-        include: health, info, metrics
+        include: health, info, metrics, loggers
   endpoint:
     health:
       show-details: always
