@@ -1,0 +1,32 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://<RDS-ENDPOINT>:5432/ecomdb
+    username: <YOUR_DB_USERNAME>
+    password: <YOUR_DB_PASSWORD>
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: false
+    properties:
+      hibernate:
+        format_sql: true
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+
+info:
+  app:
+    name: Ecom-monolith
+    description: Ecommerce Monolith Application
+    version: 1.0.0
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health, info, metrics
+  endpoint:
+    health:
+      show-details: always
+    info:
+      access: unrestricted
