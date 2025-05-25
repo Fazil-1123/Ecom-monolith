@@ -1,3 +1,25 @@
+info:
+  app:
+    name: Ecom-monolith
+    description: Ecommerce Monolith Application
+    version: 1.0.0
+
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: always
+    shutdown:
+      access: none
+  info:
+    env:
+      enabled: true
+
+
 spring:
   datasource:
     url: jdbc:postgresql://localhost:5433/ecomdb
