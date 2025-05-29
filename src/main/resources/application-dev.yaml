@@ -6,10 +6,9 @@ info:
 
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5433/ecomdb
-    username: postgres
-    password: admin
-    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5435/ecom_db
+    username: ecom_user
+    password: ecom_pass123
 
   jpa:
     hibernate:
@@ -36,3 +35,14 @@ management:
   info:
     env:
       enabled: true
+
+aws:
+  region: eu-central-1  # ✅ REQUIRED for S3 & SecretsManager client beans
+  s3:
+    bucket: ecom-dev-images
+    image-folder: Product-images/
+  cloudfront:
+    domain: d3fvaxahagq49e.cloudfront.net
+    key-pair-id: K1NWUILC6ZRCKA
+    private-key-secret-name: monolith/cloudfront/private-key
+    signed-url-expiration-seconds: 3600
