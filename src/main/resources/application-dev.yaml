@@ -37,7 +37,7 @@ management:
       enabled: true
 
 aws:
-  region: eu-central-1  # ✅ REQUIRED for S3 & SecretsManager client beans
+  region: eu-central-1
   s3:
     bucket: ecom-dev-images
     image-folder: Product-images/

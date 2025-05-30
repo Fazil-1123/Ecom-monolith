@@ -37,10 +37,10 @@ management:
       access: unrestricted
 
 aws:
-  region: us-east-1  # ✅ REQUIRED for S3 & SecretsManager client beans
+  region: eu-central-1
   s3:
     bucket: ecom-dev-images
-    image-folder: Product-images
+    image-folder: Product-images/
   cloudfront:
     domain: d3fvaxahagq49e.cloudfront.net
     key-pair-id: K1NWUILC6ZRCKA
