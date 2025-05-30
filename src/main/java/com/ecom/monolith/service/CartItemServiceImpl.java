@@ -39,8 +39,9 @@ public class CartItemServiceImpl implements CartItemService {
     public Boolean addCartItem(String userId, CartRequest cartRequest) {
         logger.info("Adding item to cart for userId={}, productId={}, quantity={}", userId, cartRequest.getProductId(), cartRequest.getQuantity());
 
-        Product product = productRepository.findById(Long.valueOf(cartRequest.getProductId()))
-                .orElseThrow(() -> new ResourceNotFound("Product not found with id: " + cartRequest.getProductId()));
+        Product product = productRepository.findByIdAndActiveTrue(Long.valueOf(cartRequest.getProductId())).orElseThrow(
+                () -> new ResourceNotFound("Product not found with id: " + cartRequest.getProductId())
+        );
 
         if (product.getStockQuantity() < cartRequest.getQuantity()) {
             logger.warn("Out of stock for productId={} requested by userId={}", cartRequest.getProductId(), userId);
